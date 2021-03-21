@@ -3,6 +3,7 @@ add_executable(${PROJECT_NAME}
     application.cpp
     window.cpp
     preferences.cpp
+    gtkwebview.cpp
     ${GENERATED_DATA_DIR}/resources.c
     )
 

@@ -1,12 +1,22 @@
+#pragma once
+
+#include <gtkmm/widget.h>
+#include <webkit2/webkit2.h>
+
 class GtkWebView : public Gtk::Widget
 {
 public:
+    GtkWebView();
+    ~GtkWebView() override = default;
 
-    GtkWebView () : Gtk::Widget (webkit_web_view_new()) {}
-    virtual ~GtkWebView () {};
+    operator WebKitWebView*();
 
-    operator WebKitWebView * () { return WEBKIT_WEB_VIEW(gobj()); }
+public:
+    void load_uri(const Glib::ustring& uri);
 
-    //  Wrap any functions you want to use like this:
-    void load_uri (const gchar *strUri) { webkit_web_view_load_uri(*this, strUri); }  
+public:
+    sigc::signal<void, bool> signalLoadingChanged();
+
+private:
+    sigc::signal<void, bool> LoadingChanged;
 };
