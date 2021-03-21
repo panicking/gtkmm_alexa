@@ -21,7 +21,6 @@ class Window : public Gtk::ApplicationWindow {
     Glib::RefPtr<Gio::Settings> settings;
     Gtk::HeaderBar*             headerBar;
     Gtk::ScrolledWindow*        scrolledView;
-    WebKitWebView*              webview;
 
     void setHeaderBar();
 };

@@ -20,10 +20,10 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
         throw std::runtime_error("No \"scrolledview\" object in window.glade");
     }
 
-    CWebView  *pView = new CWebView;
-    scrolledView->add(*pView);
-    pView->load_uri("https://www.amarulasolutions.com");
-    pView->set_visible();
+    GtkWebView  *webview = new GtkWebView;
+    scrolledView->add(*webview);
+    webview->load_uri("https://www.amarulasolutions.com");
+    webview->set_visible();
 
     settings = Gio::Settings::create(projectdefinitions::getApplicationID());
 
