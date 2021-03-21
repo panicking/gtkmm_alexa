@@ -20,8 +20,6 @@ class Window : public Gtk::ApplicationWindow {
     Glib::RefPtr<Gtk::Builder>  builder;
     Glib::RefPtr<Gio::Settings> settings;
     Gtk::HeaderBar*             headerBar;
-    Gtk::Label*                 firstLabel;
-    Gtk::Label*                 secondLabel;
     Gtk::ScrolledWindow*        scrolledView;
     WebKitWebView*              webview;
 

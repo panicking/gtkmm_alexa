@@ -13,19 +13,7 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
       builder(builder),
       settings(nullptr),
       headerBar(nullptr),
-      firstLabel(nullptr),
-      secondLabel(nullptr),
       scrolledView(nullptr) {
-
-    builder->get_widget("firstLabel", firstLabel);
-    if (!firstLabel) {
-        throw std::runtime_error("No \"firstLabel\" object in window.glade");
-    }
-
-    builder->get_widget("secondLabel", secondLabel);
-    if (!secondLabel) {
-        throw std::runtime_error("No \"secondLabel\" object in window.glade");
-    }
 
     builder->get_widget("scrolled_webview", scrolledView);
     if (!scrolledView) {
@@ -38,8 +26,6 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
     pView->set_visible();
 
     settings = Gio::Settings::create(projectdefinitions::getApplicationID());
-    settings->bind("first", firstLabel->property_label());
-    settings->bind("second", secondLabel->property_visible());
 
     set_icon(Gdk::Pixbuf::create_from_resource(projectdefinitions::getApplicationPrefix() + "icons/48x48/icon.png"));
     setHeaderBar();
