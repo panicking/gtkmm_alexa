@@ -5,6 +5,9 @@
     <file preprocess="xml-stripblanks">ui/headerbar.glade</file>
     <file preprocess="xml-stripblanks">ui/preferences.glade</file>
     <file preprocess="xml-stripblanks">ui/menu.glade</file>
+    <file>alexa/index.html</file>
+    <file>alexa/main.bundle.js</file>
+    <file>alexa/4444bbbc2f4dd0a9586f053308ab9a1a.png</file>
     <file>icons/48x48/icon.png</file>
   </gresource>
 </gresources>

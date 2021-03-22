@@ -22,7 +22,8 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
 
     GtkWebView  *webview = new GtkWebView;
     scrolledView->add(*webview);
-    webview->load_uri("https://www.amarulasolutions.com");
+
+    webview->load_uri("alexa-org:/" + projectdefinitions::getApplicationPrefix() + "alexa/index.html");
     webview->set_visible();
 
     settings = Gio::Settings::create(projectdefinitions::getApplicationID());
