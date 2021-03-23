@@ -8,6 +8,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/scrolledwindow.h>
 #include <webkit2/webkit2.h>
+#include "alexaclient.h"
 
 class Window : public Gtk::ApplicationWindow {
     public:
@@ -21,6 +22,8 @@ class Window : public Gtk::ApplicationWindow {
     Glib::RefPtr<Gio::Settings> settings;
     Gtk::HeaderBar*             headerBar;
     Gtk::ScrolledWindow*        scrolledView;
+
+    AlexaClient                 alexa;
 
     void setHeaderBar();
 };
