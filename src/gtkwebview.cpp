@@ -65,6 +65,10 @@ void GtkWebView::load_uri(const Glib::ustring &uri)
     webkit_web_view_load_uri(*this, uri.c_str());
 }
 
+void GtkWebView::reload() {
+    webkit_web_view_reload(*this);
+}
+
 sigc::signal<void, bool>  GtkWebView::signalLoadingChanged()
 {
     return LoadingChanged;

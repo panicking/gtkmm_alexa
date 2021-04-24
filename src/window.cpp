@@ -11,7 +11,12 @@
 
 void Window::on_status_changed(std::string status) {
     std::cout << status << std::endl;
+    AlexaClient::AlexaState state;
     alexaStatus->set_text(status.c_str());
+    state = alexa.alexaState();
+    if (state == AlexaClient::UNKNOWN) {
+         webview->reload();
+    }
 }
 
 Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder)
@@ -28,7 +33,7 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
 
     builder->get_widget("alexa_status", alexaStatus);
 
-    GtkWebView  *webview = new GtkWebView;
+    webview = new GtkWebView;
     scrolledView->add(*webview);
 
     alexa.onNewWebConnectionChanged().connect(sigc::mem_fun(this, &Window::on_status_changed));

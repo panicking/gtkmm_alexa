@@ -1,5 +1,4 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include <giomm/settings.h>
 #include <gtkmm/applicationwindow.h>
@@ -10,6 +9,7 @@
 #include <gtkmm/label.h>
 #include <webkit2/webkit2.h>
 #include "alexaclient.h"
+#include "gtkwebview.h"
 
 class Window : public Gtk::ApplicationWindow {
     public:
@@ -24,11 +24,10 @@ class Window : public Gtk::ApplicationWindow {
     Gtk::HeaderBar*             headerBar;
     Gtk::ScrolledWindow*        scrolledView;
     Gtk::Label*                 alexaStatus;
+    GtkWebView*                 webview;
 
     AlexaClient                 alexa;
 
     void setHeaderBar();
     void on_status_changed(std::string status);
 };
-
-#endif  // WINDOW_H

@@ -13,6 +13,7 @@ public:
 
 public:
     void load_uri(const Glib::ustring& uri);
+    void reload();
 
 public:
     sigc::signal<void, bool> signalLoadingChanged();

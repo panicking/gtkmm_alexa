@@ -105,6 +105,7 @@ static void soup_connection_state_changed(GObject *object, GParamSpec *param, gp
         g_clear_object(&connection->cconnection);
         break;
     }
+    alexa->setAlexaState("UNKNOWN");
 }
 
 static void on_SoupClientWebsocketCallback(SoupSession *session, GAsyncResult *res, gpointer user_data)
