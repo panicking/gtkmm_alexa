@@ -70,6 +70,8 @@ public:
     void set_webrtc_connection(struct Connection *conn);
     struct Connection* get_webrtc_connection() { return &connection; };
 
+    sigc::signal<void(std::string)> onNewWebConnectionChanged();
+
 private:
 
     std::map<std::string, AlexaState> s_mapStringToAlexaState =
@@ -106,7 +108,6 @@ private:
     SoupServer *server;
     Connection connection;
 
-    sigc::signal<void, bool> onNewWebConnectionChanged();
 private:
-    sigc::signal<void, bool> onNewWebConnection;
+    sigc::signal<void(std::string)> onNewWebConnection;
 };

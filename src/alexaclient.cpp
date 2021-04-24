@@ -174,7 +174,7 @@ bool AlexaClient::alexaRendering() const
     return m_alexaRenderingDocument || m_alexaRenderingPlayer || m_alexaRenderingTemplate;
 }
 
-sigc::signal<void, bool> AlexaClient::onNewWebConnectionChanged()
+sigc::signal<void(std::string)> AlexaClient::onNewWebConnectionChanged()
 {
     return onNewWebConnection;
 }

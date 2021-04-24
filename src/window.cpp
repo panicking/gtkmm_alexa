@@ -2,11 +2,17 @@
 
 #include <gtkmm/settings.h>
 #include <webkit2/webkit2.h>
+#include <sigc++/sigc++.h>
 
 #include <iostream>
 
 #include "projectdefinitions.h"
 #include "gtkwebview.h"
+
+void Window::on_status_changed(std::string status) {
+    std::cout << status << std::endl;
+    alexaStatus->set_text(status.c_str());
+}
 
 Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder)
     : Gtk::ApplicationWindow(cobject),
@@ -20,8 +26,12 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
         throw std::runtime_error("No \"scrolledview\" object in window.glade");
     }
 
+    builder->get_widget("alexa_status", alexaStatus);
+
     GtkWebView  *webview = new GtkWebView;
     scrolledView->add(*webview);
+
+    alexa.onNewWebConnectionChanged().connect(sigc::mem_fun(this, &Window::on_status_changed));
 
     webview->load_uri("alexa-org:/" + projectdefinitions::getApplicationPrefix() + "alexa/index.html");
     webview->set_visible();

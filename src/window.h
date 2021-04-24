@@ -7,6 +7,7 @@
 #include <gtkmm/headerbar.h>
 #include <gtkmm/label.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/label.h>
 #include <webkit2/webkit2.h>
 #include "alexaclient.h"
 
@@ -22,10 +23,12 @@ class Window : public Gtk::ApplicationWindow {
     Glib::RefPtr<Gio::Settings> settings;
     Gtk::HeaderBar*             headerBar;
     Gtk::ScrolledWindow*        scrolledView;
+    Gtk::Label*                 alexaStatus;
 
     AlexaClient                 alexa;
 
     void setHeaderBar();
+    void on_status_changed(std::string status);
 };
 
 #endif  // WINDOW_H
