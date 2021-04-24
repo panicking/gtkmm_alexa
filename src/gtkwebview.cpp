@@ -38,7 +38,7 @@ static void gtk_web_view_filter_resource(WebKitURISchemeRequest *request, gpoint
 
     stream = g_resources_open_stream (path.c_str(), (GResourceLookupFlags)0, &error);
     if (stream)
-        webkit_uri_scheme_request_finish(request, stream, size, NULL);
+        webkit_uri_scheme_request_finish(request, stream, size, "text/html");
     else
         webkit_uri_scheme_request_finish_error(request, error);
 }
