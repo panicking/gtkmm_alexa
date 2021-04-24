@@ -150,8 +150,6 @@ static void on_SoupServerWebsocketCallback(SoupServer *server, SoupWebsocketConn
         return;
     }
 
-    GInetAddress *inet_address = g_inet_socket_address_get_address((GInetSocketAddress *) socket_address);
-    connection->ip_address = g_inet_address_to_string(inet_address);
     connection->connection = conn;
     g_object_ref(conn);
     /* Subscribe to the various signals */

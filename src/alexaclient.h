@@ -12,21 +12,10 @@ public:
     ~AlexaClient();
 
     struct Connection {
-        /* The reference counted connection itself */
         SoupWebsocketConnection *connection;
-
-        /* The reference counted proxied connection */
-        GSocketConnection *proxy_connection;
-        GDataInputStream *distream;
-
-        /* Has this connection authenticated yet? */
-        gboolean is_authenticated;
-
-        /* Remote IP Address. Must be g_free'd on destroy */
-        gchar *ip_address;
-
-        SoupSession *session;
+        /* client session */
         SoupWebsocketConnection *cconnection;
+        SoupSession *session;
     };
 
     enum AlexaState {
@@ -40,9 +29,6 @@ public:
         THINKING,
         SPEAKING
     };
-
-    void connectSocketToSmartScreen();
-    void disconnectSocketToSmartScreen();
 
     AlexaState alexaState() const;
 
@@ -62,8 +48,6 @@ public:
     AlexaState alexaStateEnum(std::string state) {
         return s_mapStringToAlexaState[state];
     }
-
-    int webPageState() const;
 
     void set_webrtc_connection(struct Connection *conn);
     struct Connection* get_webrtc_connection() { return &connection; };
