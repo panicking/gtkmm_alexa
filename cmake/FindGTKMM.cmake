@@ -1,5 +1,5 @@
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTKMM REQUIRED gtkmm-3.0 webkit2gtk-4.0)
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0 webkit2gtk-4.0 json-glib-1.0)
 
 add_library(GTKMM INTERFACE IMPORTED)
 set_property(TARGET GTKMM PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${GTKMM_INCLUDE_DIRS})
