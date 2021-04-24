@@ -3,6 +3,7 @@
 #include <sigc++/sigc++.h>
 #include <string>
 #include <vector>
+#include <map>
 
 class AlexaClient
 {
@@ -44,7 +45,23 @@ public:
     void disconnectSocketToSmartScreen();
 
     AlexaState alexaState() const;
-    std::string alexaStateStr() const;
+
+    std::string alexaStateStr() const {
+        for (auto &index: s_mapStringToAlexaState) {
+            if (index.second == m_alexaState)
+                return index.first;
+        }
+        return nullptr;
+    };
+
+    void setAlexaState(const std::string state) {
+        m_alexaState = s_mapStringToAlexaState[state];
+        onNewWebConnection.emit(state);
+    }
+
+    AlexaState alexaStateEnum(std::string state) {
+        return s_mapStringToAlexaState[state];
+    }
 
     bool alexaRendering() const;
 
@@ -54,6 +71,20 @@ public:
     struct Connection* get_webrtc_connection() { return &connection; };
 
 private:
+
+    std::map<std::string, AlexaState> s_mapStringToAlexaState =
+    {
+        { "UNKNOWN", AlexaState::UNKNOWN },
+        { "DISCONNECTED", AlexaState::DISCONNECTED },
+        { "CONNECTING", AlexaState::CONNECTING },
+        { "CONNECTED", AlexaState::CONNECTED },
+        { "IDLE", AlexaState::IDLE },
+        { "LISTENING", AlexaState::LISTENING },
+        { "EXPECTING", AlexaState::EXPECTING },
+        { "THINKING", AlexaState::THINKING },
+        { "SPEAKING", AlexaState::SPEAKING }
+    };
+
     void alexaStateChanged();
     void alexaRenderingChanged();
     void webPageStateChanged();
@@ -66,7 +97,6 @@ private:
     void processWebDisconnect();
 
     AlexaState m_alexaState{AlexaState::UNKNOWN};
-    void setAlexaState(const AlexaState state);
 
     bool m_alexaRenderingTemplate{false};
     bool m_alexaRenderingDocument{false};

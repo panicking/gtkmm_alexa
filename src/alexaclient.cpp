@@ -167,7 +167,3 @@ void AlexaClient::processWebBinaryMessage(const std::vector<unsigned char> &mess
 void AlexaClient::processWebDisconnect()
 {
 }
-
-void AlexaClient::setAlexaState(const AlexaClient::AlexaState state)
-{
-}
