@@ -46,6 +46,9 @@ soup_server_data(SoupWebsocketConnection *self, gint type, GBytes *message,
     AlexaClient *alexa = static_cast<AlexaClient*>(user_data);
     AlexaClient::Connection *connection = alexa->get_webrtc_connection();
 
+    if (connection->cconnection == NULL)
+        return;
+
     if (type == SOUP_WEBSOCKET_DATA_TEXT) {
         gsize sz;
         const gchar* ptr;
@@ -88,6 +91,22 @@ static void soup_client_data(SoupWebsocketConnection *conn, gint type,
     }
 }
 
+static void soup_connection_state_changed(GObject *object, GParamSpec *param, gpointer user_data)
+{
+    AlexaClient *alexa = static_cast<AlexaClient*>(user_data);
+    struct AlexaClient::Connection *connection = alexa->get_webrtc_connection();
+    SoupConnectionState state;
+
+    g_object_get(object, "state", &state, NULL);
+
+    switch (state) {
+    case SOUP_CONNECTION_IDLE:
+        g_print("Alexa disconnect\n");
+        g_clear_object(&connection->cconnection);
+        break;
+    }
+}
+
 static void on_SoupClientWebsocketCallback(SoupSession *session, GAsyncResult *res, gpointer user_data)
 {
     AlexaClient *alexa = static_cast<AlexaClient*>(user_data);
@@ -103,7 +122,8 @@ static void on_SoupClientWebsocketCallback(SoupSession *session, GAsyncResult *r
 
     soup_websocket_connection_send_text(connection->cconnection, "alexa");
     g_signal_connect(connection->cconnection, "message", G_CALLBACK(soup_client_data), alexa);
-    fprintf(stderr, "Alexa connected\n");
+    g_signal_connect(connection->cconnection, "notify::state", G_CALLBACK (soup_connection_state_changed), alexa);
+    g_print("Alexa connected\n");
 }
 
 static void on_SoupServerWebsocketCallback(SoupServer *server, SoupWebsocketConnection *conn,
@@ -149,7 +169,7 @@ static void on_SoupServerWebsocketCallback(SoupServer *server, SoupWebsocketConn
 
 AlexaClient::AlexaClient()
 {
-    SoupServer *server = soup_server_new("tls-certificate", NULL, NULL);
+    server = soup_server_new("tls-certificate", NULL, NULL);
     SoupMessage *msg = NULL;
     connection = { 0 };
 
@@ -160,6 +180,7 @@ AlexaClient::AlexaClient()
 AlexaClient::~AlexaClient()
 {
     soup_server_remove_handler(server, NULL);
+    g_clear_object(&server);
 }
 
 AlexaClient::AlexaState AlexaClient::alexaState() const
