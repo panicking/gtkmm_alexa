@@ -9,7 +9,7 @@
 
 static void
 soup_server_error(SoupWebsocketConnection *self,
-               gpointer                 user_data)
+                  gpointer user_data)
 {
     fprintf(stderr, "WS Error\n");
 }
@@ -40,10 +40,8 @@ static void decode_alexa_json(AlexaClient* alexa, JsonParser *parser, const gcha
 }
 
 static void
-soup_server_data(SoupWebsocketConnection *self,
-               gint                     type,
-               GBytes                  *message,
-               gpointer                 user_data)
+soup_server_data(SoupWebsocketConnection *self, gint type, GBytes *message,
+                 gpointer user_data)
 {
     AlexaClient *alexa = static_cast<AlexaClient*>(user_data);
     AlexaClient::Connection *connection = alexa->get_webrtc_connection();
@@ -54,7 +52,7 @@ soup_server_data(SoupWebsocketConnection *self,
 
         ptr = (const gchar *)g_bytes_get_data(message, &sz);
 
-	soup_websocket_connection_send_text(connection->cconnection, ptr);
+        soup_websocket_connection_send_text(connection->cconnection, ptr);
         g_print("Received server text data: %s\n", ptr);
     }
     else if (type == SOUP_WEBSOCKET_DATA_BINARY) {
@@ -66,7 +64,7 @@ soup_server_data(SoupWebsocketConnection *self,
 }
 
 static void soup_client_data(SoupWebsocketConnection *conn, gint type,
-		         GBytes *message, gpointer user_data)
+                             GBytes *message, gpointer user_data)
 {
     AlexaClient *alexa = static_cast<AlexaClient*>(user_data);
     AlexaClient::Connection *connection = alexa->get_webrtc_connection();
@@ -161,7 +159,7 @@ AlexaClient::AlexaClient()
 
 AlexaClient::~AlexaClient()
 {
-	soup_server_remove_handler(server, NULL);
+    soup_server_remove_handler(server, NULL);
 }
 
 AlexaClient::AlexaState AlexaClient::alexaState() const
