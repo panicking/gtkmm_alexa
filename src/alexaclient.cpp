@@ -11,7 +11,7 @@ static void
 soup_server_error(SoupWebsocketConnection *self,
                   gpointer user_data)
 {
-    fprintf(stderr, "WS Error\n");
+    g_print("WS Error\n");
 }
 
 static void decode_alexa_json(AlexaClient* alexa, JsonParser *parser, const gchar* ptr)
@@ -19,7 +19,7 @@ static void decode_alexa_json(AlexaClient* alexa, JsonParser *parser, const gcha
     GError* err = NULL;
 
     if (!json_parser_load_from_data(parser, ptr, -1, &err)) {
-        printf("error in parsing json data %s", err->message);
+        g_print("error in parsing json data %s", err->message);
         g_error_free (err);
         return;
     }
@@ -138,7 +138,7 @@ static void on_SoupServerWebsocketCallback(SoupServer *server, SoupWebsocketConn
     if (connection->connection)
         return;
 
-    fprintf(stderr, "Connection from WebPage\n");
+    g_print("Connection from WebPage\n");
     /* Figure out who we're talking to */
     GSocketAddress *socket_address = soup_client_context_get_remote_address(client);
 
@@ -146,7 +146,7 @@ static void on_SoupServerWebsocketCallback(SoupServer *server, SoupWebsocketConn
 
     if ((family != G_SOCKET_FAMILY_IPV4) && (family != G_SOCKET_FAMILY_IPV6)) {
         /* Should be unreachable */
-        fprintf(stderr, "Non-IP socket?\n");
+        g_print("Non-IP socket?\n");
         return;
     }
 
@@ -162,7 +162,7 @@ static void on_SoupServerWebsocketCallback(SoupServer *server, SoupWebsocketConn
         msg = soup_message_new(SOUP_METHOD_GET, "ws://localhost:8933");
         soup_session_websocket_connect_async(connection->session, msg, NULL, NULL, NULL,
                                              (GAsyncReadyCallback)on_SoupClientWebsocketCallback, alexa);
-        fprintf(stderr, "Connect to Alexa\n");
+        g_print("Connect to Alexa\n");
     }
 }
 
