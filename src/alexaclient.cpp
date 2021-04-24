@@ -167,32 +167,7 @@ AlexaClient::AlexaState AlexaClient::alexaState() const
     return m_alexaState;
 }
 
-bool AlexaClient::alexaRendering() const
-{
-    return m_alexaRenderingDocument || m_alexaRenderingPlayer || m_alexaRenderingTemplate;
-}
-
 sigc::signal<void(std::string)> AlexaClient::onNewWebConnectionChanged()
 {
     return onNewWebConnection;
-}
-
-void AlexaClient::processAppTextMessage(const std::string &message)
-{
-}
-
-void AlexaClient::processAppBinaryMessage(const std::vector<unsigned char> &message)
-{
-}
-
-void AlexaClient::processWebTextMessage(const std::string &message)
-{
-}
-
-void AlexaClient::processWebBinaryMessage(const std::vector<unsigned char> &message)
-{
-}
-
-void AlexaClient::processWebDisconnect()
-{
 }

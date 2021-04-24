@@ -63,8 +63,6 @@ public:
         return s_mapStringToAlexaState[state];
     }
 
-    bool alexaRendering() const;
-
     int webPageState() const;
 
     void set_webrtc_connection(struct Connection *conn);
@@ -87,22 +85,7 @@ private:
         { "SPEAKING", AlexaState::SPEAKING }
     };
 
-    void alexaStateChanged();
-    void alexaRenderingChanged();
-    void webPageStateChanged();
-
-    void processAppTextMessage(const std::string &message);
-    void processAppBinaryMessage(const std::vector<unsigned char> &message);
-
-    void processWebTextMessage(const std::string &message);
-    void processWebBinaryMessage(const std::vector<unsigned char> &message);
-    void processWebDisconnect();
-
     AlexaState m_alexaState{AlexaState::UNKNOWN};
-
-    bool m_alexaRenderingTemplate{false};
-    bool m_alexaRenderingDocument{false};
-    bool m_alexaRenderingPlayer{false};
 
     /* webrtc */
     SoupServer *server;
