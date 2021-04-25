@@ -18,6 +18,7 @@ configure_file(cmake/projectdefinitions.h.in ${GENERATED_SOURCES_DIR}/projectdef
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_WEBKIT")
 
 find_package(GTKMM)
+find_package(RapidJSON)
 
 add_subdirectory(src)
 add_subdirectory(data)

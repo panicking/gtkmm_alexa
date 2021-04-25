@@ -4,7 +4,7 @@
 #include <gmodule.h>
 #include <glibmm.h>
 #include <giomm.h>
-#include <json-glib/json-glib.h>
+#include <rapidjson/document.h>
 #include "alexaclient.h"
 
 static void
@@ -14,29 +14,17 @@ soup_server_error(SoupWebsocketConnection *self,
     g_print("WS Error\n");
 }
 
-static void decode_alexa_json(AlexaClient* alexa, JsonParser *parser, const gchar* ptr)
+static void decode_alexa_json(AlexaClient* alexa, const gchar* ptr)
 {
-    GError* err = NULL;
+    rapidjson::StringStream parser(ptr);
+    rapidjson::Document reader;
 
-    if (!json_parser_load_from_data(parser, ptr, -1, &err)) {
-        g_print("error in parsing json data %s", err->message);
-        g_error_free (err);
+    reader.ParseStream(parser);
+
+    if (!reader.HasMember("state"))
         return;
-    }
-
-    JsonReader *reader = json_reader_new (json_parser_get_root (parser));
-
-    if (json_reader_read_member (reader, "state")) {
-        std::string value;
-        const gchar *ptr = json_reader_get_string_value (reader);
-        if (ptr) {
-            value = ptr;
-        } else value = "0";
-        alexa->setAlexaState(value);
-    }
-    json_reader_end_member (reader);
-
-    g_object_unref (reader);
+    std::string value = reader["state"].GetString();
+    alexa->setAlexaState(value);
 }
 
 static void
@@ -73,15 +61,13 @@ static void soup_client_data(SoupWebsocketConnection *conn, gint type,
     AlexaClient::Connection *connection = alexa->get_webrtc_connection();
 
     if (type == SOUP_WEBSOCKET_DATA_TEXT) {
-        JsonParser *parser = json_parser_new();
         gsize sz;
         const gchar* ptr;
 
         ptr = (const gchar *)g_bytes_get_data(message, &sz);
         g_print("Received client text data: %s\n", ptr);
         soup_websocket_connection_send_text(connection->connection, ptr);
-        decode_alexa_json(alexa, parser, ptr);
-        g_object_unref(parser);
+        decode_alexa_json(alexa, ptr);
     }
     else if (type == SOUP_WEBSOCKET_DATA_BINARY) {
         g_print("Received binary data (not shown)\n");
