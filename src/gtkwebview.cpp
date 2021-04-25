@@ -46,6 +46,11 @@ static void gtk_web_view_filter_resource(WebKitURISchemeRequest *request, gpoint
 GtkWebView::GtkWebView() : Gtk::Widget(webkit_web_view_new())
 {
     WebKitWebContext *context = webkit_web_context_get_default();
+#if defined(DEBUG_WEBKIT)
+    WebKitSettings *settings = webkit_web_view_get_settings (*this);
+
+    g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);
+#endif
     g_signal_connect(*this, "load-changed", G_CALLBACK(gtk_on_load_changed), this);
 
     /* register to load gresource files */
@@ -63,6 +68,11 @@ GtkWebView::operator WebKitWebView*()
 void GtkWebView::load_uri(const Glib::ustring &uri)
 {
     webkit_web_view_load_uri(*this, uri.c_str());
+#if defined(DEBUG_WEBKIT)
+    /* Show the inspector */
+    WebKitWebInspector *inspector = webkit_web_view_get_inspector (*this);
+    webkit_web_inspector_show (WEBKIT_WEB_INSPECTOR(inspector));
+#endif
 }
 
 void GtkWebView::reload() {

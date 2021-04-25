@@ -15,6 +15,8 @@ set(GENERATED_DATA_DIR ${GENERATED_FILES_DIR}/data)
 
 configure_file(cmake/projectdefinitions.h.in ${GENERATED_SOURCES_DIR}/projectdefinitions.h)
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_WEBKIT")
+
 find_package(GTKMM)
 
 add_subdirectory(src)
