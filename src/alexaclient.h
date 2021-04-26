@@ -1,6 +1,6 @@
 #pragma once
 
-#include <sigc++/sigc++.h>
+#include <boost/signals2.hpp>
 #include <string>
 #include <vector>
 #include <map>
@@ -42,7 +42,7 @@ public:
 
     void setAlexaState(const std::string state) {
         m_alexaState = s_mapStringToAlexaState[state];
-        onNewWebConnection.emit(state);
+        onNewWebConnectionChanged(state);
     }
 
     AlexaState alexaStateEnum(std::string state) {
@@ -52,7 +52,7 @@ public:
     void set_webrtc_connection(struct Connection *conn);
     struct Connection* get_webrtc_connection() { return &connection; };
 
-    sigc::signal<void(std::string)> onNewWebConnectionChanged();
+    boost::signals2::signal<void (std::string)> onNewWebConnectionChanged;
 
 private:
 
@@ -74,7 +74,4 @@ private:
     /* webrtc */
     SoupServer *server;
     Connection connection;
-
-private:
-    sigc::signal<void(std::string)> onNewWebConnection;
 };

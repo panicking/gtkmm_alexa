@@ -2,7 +2,8 @@
 
 #include <gtkmm/settings.h>
 #include <webkit2/webkit2.h>
-#include <sigc++/sigc++.h>
+#include <boost/signals2.hpp>
+#include <boost/bind.hpp>
 
 #include <iostream>
 
@@ -36,7 +37,7 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
     webview = new GtkWebView;
     scrolledView->add(*webview);
 
-    alexa.onNewWebConnectionChanged().connect(sigc::mem_fun(this, &Window::on_status_changed));
+    alexa.onNewWebConnectionChanged.connect(boost::bind(&Window::on_status_changed, this, _1));
 
     webview->load_uri("alexa-org:/" + projectdefinitions::getApplicationPrefix() + "alexa/index.html");
     webview->set_visible();

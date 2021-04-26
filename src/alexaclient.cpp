@@ -172,8 +172,3 @@ AlexaClient::AlexaState AlexaClient::alexaState() const
 {
     return m_alexaState;
 }
-
-sigc::signal<void(std::string)> AlexaClient::onNewWebConnectionChanged()
-{
-    return onNewWebConnection;
-}
