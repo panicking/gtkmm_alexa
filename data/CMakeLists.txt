@@ -10,7 +10,7 @@ configure_file(icons/48x48/icon.png ${ICON_FILE} COPYONLY)
 
 compile_schemas(${GSCHEMA_FILE})
 
-install(FILES ${GSCHEMA_FILE} DESTINATION /usr/share/glib-2.0/schemas)
-install(FILES ${DESKTOP_FILE} DESTINATION /usr/share/applications)
-install(FILES ${ICON_FILE} DESTINATION /usr/share/icons/${PROJECT_NAME})
+install(FILES ${GSCHEMA_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/usr/share/glib-2.0/schemas)
+install(FILES ${DESKTOP_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/usr/share/applications)
+install(FILES ${ICON_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/usr/share/icons/${PROJECT_NAME})
 install(SCRIPT ${PROJECT_SOURCE_DIR}/cmake/InstallScript.cmake)
