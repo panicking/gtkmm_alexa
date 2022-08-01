@@ -16,10 +16,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${GENERATED_SOURCES_DIR})
 
 compile_resources(
     ${GENERATED_DATA_DIR}/resources.c
-    window.glade
-    headerbar.glade
-    menu.glade
-    preferences.glade
+    window.ui
+    headerbar.ui
+    menu.ui
+    preferences.ui
     )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

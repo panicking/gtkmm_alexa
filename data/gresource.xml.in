@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="@APPLICATION_PREFIX@">
-    <file preprocess="xml-stripblanks">ui/window.glade</file>
-    <file preprocess="xml-stripblanks">ui/headerbar.glade</file>
-    <file preprocess="xml-stripblanks">ui/preferences.glade</file>
-    <file preprocess="xml-stripblanks">ui/menu.glade</file>
+    <file preprocess="xml-stripblanks">ui/window.ui</file>
+    <file preprocess="xml-stripblanks">ui/headerbar.ui</file>
+    <file preprocess="xml-stripblanks">ui/preferences.ui</file>
+    <file preprocess="xml-stripblanks">ui/menu.ui</file>
     <file>alexa/index.html</file>
     <file>alexa/main.bundle.js</file>
     <file>alexa/4444bbbc2f4dd0a9586f053308ab9a1a.png</file>

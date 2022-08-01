@@ -41,7 +41,7 @@ void Application::on_startup() {
 
     auto builder = Gtk::Builder::create();
     try {
-        builder->add_from_resource(projectdefinitions::getApplicationPrefix() + "ui/menu.glade");
+        builder->add_from_resource(projectdefinitions::getApplicationPrefix() + "ui/menu.ui");
     } catch (const Glib::Error &ex) {
         std::cerr << "Application::on_startup(): " << ex.what() << std::endl;
         return;
@@ -52,7 +52,7 @@ void Application::on_startup() {
     if (app_menu) {
         set_app_menu(app_menu);
     } else {
-        std::cerr << "Application::on_startup(): No \"appmenu\" object in menu.glade" << std::endl;
+        std::cerr << "Application::on_startup(): No \"appmenu\" object in menu.ui" << std::endl;
     }
 }
 

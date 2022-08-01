@@ -29,7 +29,7 @@ Window::Window(Gtk::ApplicationWindow::BaseObjectType* cobject, const Glib::RefP
 
     builder->get_widget("scrolled_webview", scrolledView);
     if (!scrolledView) {
-        throw std::runtime_error("No \"scrolledview\" object in window.glade");
+        throw std::runtime_error("No \"scrolledview\" object in window.ui");
     }
 
     builder->get_widget("alexa_status", alexaStatus);
@@ -52,22 +52,22 @@ Window::~Window() {
 }
 
 Window* Window::create() {
-    auto builder = Gtk::Builder::create_from_resource(projectdefinitions::getApplicationPrefix() + "ui/window.glade");
+    auto builder = Gtk::Builder::create_from_resource(projectdefinitions::getApplicationPrefix() + "ui/window.ui");
 
     Window* window = nullptr;
     builder->get_widget_derived("window", window);
     if (!window) {
-        throw std::runtime_error("No \"window\" object in window.glade");
+        throw std::runtime_error("No \"window\" object in window.ui");
     }
     return window;
 }
 
 void Window::setHeaderBar() {
     auto builder =
-        Gtk::Builder::create_from_resource(projectdefinitions::getApplicationPrefix() + "ui/headerbar.glade");
+        Gtk::Builder::create_from_resource(projectdefinitions::getApplicationPrefix() + "ui/headerbar.ui");
     builder->get_widget("headerBar", headerBar);
     if (!headerBar) {
-        throw std::runtime_error("No \"headerBar\" object in headerbar.glade");
+        throw std::runtime_error("No \"headerBar\" object in headerbar.ui");
     } else {
         headerBar->set_title(projectdefinitions::getProjectName());
         set_titlebar(*headerBar);
