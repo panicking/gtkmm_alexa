@@ -3,12 +3,14 @@
 #include <gtkmm/settings.h>
 #include <webkit2/webkit2.h>
 #include <boost/signals2.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <iostream>
 
 #include "projectdefinitions.h"
 #include "gtkwebview.h"
+
+using namespace boost::placeholders;
 
 void Window::on_status_changed(std::string status) {
     std::cout << status << std::endl;
