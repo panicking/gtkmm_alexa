@@ -4,7 +4,6 @@
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/headerbar.h>
-#include <gtkmm/label.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/label.h>
 #include <webkit2/webkit2.h>
