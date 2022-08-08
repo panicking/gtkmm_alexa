@@ -49,7 +49,7 @@ GtkWebView::GtkWebView() : Gtk::Widget(webkit_web_view_new())
 #if defined(DEBUG_WEBKIT)
     WebKitSettings *settings = webkit_web_view_get_settings (*this);
 
-    g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);
+    webkit_settings_set_enable_developer_extras(settings, TRUE);
 #endif
     g_signal_connect(*this, "load-changed", G_CALLBACK(gtk_on_load_changed), this);
 
