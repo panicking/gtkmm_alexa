@@ -8,8 +8,16 @@ add_executable(${PROJECT_NAME}
     ${GENERATED_DATA_DIR}/resources.c
     )
 
+link_directories(
+    ${GTKMM_LIBRARY_DIRS}
+    )
+
+include_directories(
+    ${GTKMM_INCLUDE_DIRS}
+    )
+
 target_link_libraries(${PROJECT_NAME}
-    GTKMM
+    ${GTKMM_LIBRARIES}
     )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${GENERATED_SOURCES_DIR})
